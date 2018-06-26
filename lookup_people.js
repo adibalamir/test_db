@@ -11,13 +11,14 @@ const client = new pg.Client({
   ssl      : settings.ssl
 });
 
-function searchName() {
-  const queryString = `SELECT * FROM famous_people WHERE first_name = '${getName}' OR last_name = '${getName}'`
-  console.log("Searching...")
-  client.connect((err) => {
+const client_connect = client.connect((err) => {
     if (err) {
       return console.error("Connection Error", err);
     }
+function searchName() {
+  const queryString = `SELECT * FROM famous_people WHERE first_name = '${getName}' OR last_name = '${getName}'`
+  console.log("Searching...")
+  client_connect
     client.query(queryString, (err, result) => {
       if (err) {
         return console.error("error running query", err);
