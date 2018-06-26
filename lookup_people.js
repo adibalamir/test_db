@@ -21,16 +21,18 @@ function searchName() {
       if (err) {
         return console.error("error running query", err);
       }
-      console.log("Searching...")
-      console.log(`Found ${result.rows.length} person(s) by the name '${getName}':`)
-      let id = 0
-      for (let i = 0; i < result.rows.length; i++) {
-        id += 1
-        console.log("- " + id + ": " + result.rows[i].first_name + " " + result.rows[i].last_name + " born " + result.rows[i].birthdate)
-      }
+      format(result);
       client.end();
     });
   });
 }
-
+function format(cb) {
+  console.log("Searching...")
+  console.log(`Found ${cb.rows.length} person(s) by the name '${getName}':`)
+  let id = 0
+  for (let i = 0; i < cb.rows.length; i++) {
+    id += 1
+    console.log("- " + id + ": " + cb.rows[i].first_name + " " + cb.rows[i].last_name + " born " + cb.rows[i].birthdate)
+  }
+}
 searchName();
